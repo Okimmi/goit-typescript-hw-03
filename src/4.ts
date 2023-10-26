@@ -7,7 +7,7 @@ class Key {
 }
 
 class Person {
-  constructor(private key: object) {}
+  constructor(private key: Key) {}
 
   public getKey() {
     return this.key;
@@ -15,16 +15,16 @@ class Person {
 }
 
 abstract class House {
-  protected tenants: object[] = [];
+  protected tenants: Person[] = [];
   protected door: boolean = false;
 
-  public comeIn(person: object) {
+  public comeIn(person: Person) {
     if (this.door) {
       this.tenants.push(person);
     }
   }
 
-  public abstract openDoor(key: object): void;
+  public abstract openDoor(key: Key): void;
 }
 
 class MyHouse extends House {
@@ -32,8 +32,8 @@ class MyHouse extends House {
     super();
   }
 
-  public openDoor(personKey: object): void {
-    if (key === personKey) {
+  public openDoor(personKey: Key): void {
+    if (key.getSignatur() === personKey.getSignatur()) {
       this.door = true;
     } else {
       this.door = false;
